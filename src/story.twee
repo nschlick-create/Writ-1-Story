@@ -1,0 +1,388 @@
+:: StoryTitle
+Sixteen Can Wait
+
+
+:: StoryData
+{
+  "ifid": "DE1C2780-0B4F-41B3-B7C9-6BB97152AF4B",
+  "format": "Harlowe",
+  "format-version": "3.1.0",
+  "start": "Start",
+  "zoom": 1
+}
+
+
+:: StoryStylesheet [stylesheet]
+tw-sidebar { display: none; }
+html, body, tw-story { background: #0d0f14; }
+tw-story {
+  color: #e6e6e6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15em;
+  line-height: 1.6;
+  padding: 3% 6%;
+}
+tw-passage { max-width: 40em; margin: 0 auto; }
+tw-link, .enchantment-link { color: #7cc4ff; font-weight: bold; text-decoration: none; }
+tw-link:hover, .enchantment-link:hover { color: #ffffff; text-decoration: underline; }
+.crossed {
+  color: #e0544f;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  font-weight: bold;
+}
+.hint { color: #8a93a1; font-size: 0.85em; font-style: italic; }
+.done { color: #5cb85c; }
+.choices { margin-top: 1.4em; }
+.aside {
+  display: block;
+  border-left: 3px solid #7cc4ff;
+  background: #161b24;
+  padding: 0.6em 1em;
+  margin: 1.2em 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.85em;
+  color: #c9d4e2;
+}
+.post {
+  display: block;
+  background: #1b1f2a;
+  border: 1px solid #2a3040;
+  border-radius: 12px;
+  padding: 0.5em 0.9em;
+  margin: 0.4em 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.9em;
+}
+.textmsg {
+  display: inline-block;
+  background: #2f80ed;
+  color: #fff;
+  border-radius: 16px;
+  padding: 0.35em 0.9em;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.9em;
+}
+.inner { font-style: italic; color: #b9b2c9; }
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4em 1.2em;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.78em;
+  color: #9aa4b2;
+  border-bottom: 1px solid #2a2f3a;
+  padding-bottom: 0.5em;
+  margin-bottom: 1.6em;
+}
+.status b { color: #e6e6e6; }
+.memo {
+  display: block;
+  background: #f4f1ea;
+  color: #1d1d1d;
+  padding: 1.4em 1.8em;
+  border-radius: 4px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.5);
+}
+.memo tw-link, .memo .enchantment-link { color: #1a4f8b; }
+.memo .crossed { color: #b52b27; }
+.memo-head {
+  display: block;
+  font-family: "Courier New", monospace;
+  font-size: 0.8em;
+  border-bottom: 1px solid #999;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.8em;
+  color: #444;
+}
+.memo .aside { background: #e8e3d6; color: #2b2b2b; border-left-color: #1a4f8b; }
+.title { display: block; font-size: 2.6em; line-height: 1.1; margin-bottom: 0.2em; }
+.subtitle { display: block; color: #9aa4b2; margin-bottom: 1.5em; }
+.note { display: block; font-size: 0.8em; color: #9aa4b2; border: 1px solid #2a2f3a; padding: 0.7em 1em; border-radius: 6px; }
+.dawn { color: #ffd98a; }
+.cite { padding-left: 2em; text-indent: -2em; margin: 0 0 0.9em 0; display: block; }
+.cite a { color: #7cc4ff; }
+
+
+:: StatusBar [header]
+{
+(if: (passage:)'s name is "Start")[]
+(else-if: (passage:)'s name is "Works Cited")[]
+(else-if: $act is 1)[<div class="status"><span>Sleep: <b>(if: $sleep >= 3)[Rested](else-if: $sleep is 2)[Tired](else-if: $sleep is 1)[Exhausted](else:)[Running on empty]</b></span><span>Mood: <b>(if: $mood >= 3)[Okay](else-if: $mood is 2)[Flat](else-if: $mood is 1)[Low](else:)[Heavy]</b></span><span>Behind: <b>(if: $behind <= 0)[Not yet](else-if: $behind is 1)[A little](else-if: $behind is 2)[Way behind](else:)[Everyone is ahead of me]</b></span><span>(link-goto: "Works Cited", "Works Cited")</span></div>]
+(else-if: $act is 2)[<div class="status"><span>Senate vote: <b>9:00 AM</b></span><span>Objections answered: <b>(print: $answered's length) of 4</b></span><span>(link-goto: "Works Cited", "Works Cited")</span></div>]
+(else-if: $act is 3)[<div class="status"><span>Sleep: <b>Rested</b></span><span>Mood: <b>Okay</b></span><span>Behind: <b>Right where you are supposed to be</b></span><span>(link-goto: "Works Cited", "Works Cited")</span></div>]
+}
+
+
+:: Start
+<span class="title">Sixteen Can Wait</span><span class="subtitle">An interactive story in two acts, by Nigel Schlick</span>
+Some choices in this story will be crossed out. You will be able to see them, but you will not be able to pick them. That is the point.
+
+<span class="note">Content note: this story discusses depression, anxiety, and youth suicide statistics. If you are struggling, you can call or text 988 (the Suicide &amp; Crisis Lifeline in the U.S.) at any time.</span>
+
+<div class="choices">(link: "Begin")[(set: $sleep to 3, $mood to 3, $behind to 0, $scrolls to 0, $act to 1, $answered to (a:), $waited to false, $putdown to false, $missed to false, $texted to false, $vote to "")(goto: "Thirteen")]</div>
+
+
+:: Thirteen
+It is your thirteenth birthday. Under the wrapping paper is a phone. Your own phone.
+
+Everyone in your grade is already on the app. They talk about it at lunch, between classes, on the bus. Now you can finally join them.
+
+The sign-up screen asks one question: //When is your birthday?// You could type any year you want. Nobody would check.
+
+<span class="aside">Most major platforms still let kids open an account at thirteen, with no real age verification.</span>
+<div class="choices">[[Make an account->First Night]]
+(link: "Wait a while")[(set: $waited to true, $mood to it - 1)(goto: "Left Out")]</div>
+
+
+:: Left Out
+You wait.
+
+On Monday, the whole table is laughing at something someone posted. You laugh too, a second late, because you did not see it.
+
+On Wednesday, you find out everyone went to the movies on Saturday. The plans were made in a group chat on the app. You were not in it.
+
+On Thursday, your mom sighs. "Fine. Everyone else has it." She would rather the app did not exist. She signs you up anyway.
+
+<span class="aside">When every kid in a friend group is on an app, the one whose parents say no pays a social price for sitting out. Parents feel pressure to give in, even the ones who would rather the app did not exist.</span>
+<div class="choices">[[Open the app->First Night]]</div>
+
+
+:: First Night
+9:30 PM. You are in bed with the brightness turned all the way down so no one sees the glow under your door.
+
+The feed never ends. Every post has a number under it: likes, comments, followers.
+
+You post a picture of your birthday cake. Four likes. Someone else posted their cake an hour ago. It has 312.
+
+<span class="aside">Social media began as a way to stay in touch with people you already know. Now it is a feed built to hold your attention, ranked by likes, follower counts, and everyone else's best moments.</span>
+<div class="choices">(link: "Keep scrolling")[(set: $scrolls to it + 1, $behind to it + 1)(goto: "The Feed")]
+(link: "Put it down")[(set: $putdown to true, $behind to it + 1)(goto: "The Feed")]</div>
+
+
+:: The Feed
+(if: $putdown)[You put it down. Ten minutes later, it buzzes. You pick it back up.
+
+]The app seems to know exactly what to show you next.
+
+<span class="post">''@maxbuilds'' · 17 · Founder &amp; CEO. Just closed our first big deal. 🚀</span><span class="post">''@lena.swims'' · 19 · Olympian. Dreams do come true. 🥇</span><span class="post">''@jaycrypto'' · 20 · First million before 21. Anything is possible.</span>
+<span class="inner">They are not that much older than you. What have you done?</span>
+
+<span class="aside">Researchers at the University of Cambridge note that adolescents with anxiety and depression are especially sensitive to social comparison and to fear of negative evaluation (Fassi et al.). Social media is built to feed exactly that sensitivity.</span>
+<div class="choices">(link: "Watch one more")[(set: $scrolls to it + 1, $behind to it + 1, $sleep to it - 1)(goto: "1:47 AM")]
+(link: "Check the time")[(set: $sleep to it - 1)(goto: "1:47 AM")]</div>
+
+
+:: 1:47 AM
+The clock on your screen says 1:47 AM. School starts in six hours.
+
+Your eyes burn. Your thumb keeps moving anyway.
+
+<span class="aside">A team at the Australian National University reviewed 182 studies of more than 1.1 million young people. Problematic social media use was tied to sleep problems and lower wellbeing, along with depression and anxiety (Ahmed et al.).</span>
+<div class="choices">(if: $scrolls >= 2)[<span class="crossed">Put the phone down and sleep</span>
+(link: "One more video")[(set: $scrolls to it + 1, $sleep to it - 1)(goto: "Morning")]](else:)[(link: "Put the phone down and sleep")[(goto: "Morning")]
+(link: "One more video")[(set: $scrolls to it + 1, $sleep to it - 1)(goto: "Morning")]]</div>
+
+
+:: Morning
+Your alarm goes off at 6:40 AM.
+
+(if: $sleep <= 1)[You feel like you did not sleep at all. Maybe you did not. The idea of facing everyone at school, all of them doing better than you, is too much.](else:)[You are tired, but you could make it through the day.]
+
+<div class="choices">(if: $sleep <= 1)[<span class="crossed">Go to school</span>
+(link: "Tell Mom you're sick")[(set: $missed to true, $mood to it - 1)(goto: "The Text")]](else:)[(link: "Go to school")[(goto: "The Text")]
+(link: "Stay home")[(set: $missed to true, $mood to it - 1)(goto: "The Text")]]</div>
+
+
+:: The Text
+(if: $missed)[Around noon, your phone lights up. It is not the app this time. It is a text from Maya, your best friend since third grade.
+
+<span class="textmsg">hey r u ok?? haven't seen u today</span>](else:)[In second period, your phone buzzes under the desk. It is not the app this time. It is a text from Maya, your best friend since third grade.
+
+<span class="textmsg">u look so tired lol. r u ok??</span>]
+
+Notice something: this choice is not crossed out.
+
+<span class="aside">A 2022 meta-analysis found that online social support from caring, two-way relationships went with higher self-esteem in adolescents, r = .29 (Zhou and Cheng). That is what a text from a real friend is. It does not need an account.</span>
+<div class="choices">(link: "Text her back")[(set: $texted to true, $behind to it + 1)(goto: "Weeks Later")]
+(link: "Leave it on read")[(set: $mood to it - 1, $behind to it + 1)(goto: "Weeks Later")]</div>
+
+
+:: Weeks Later
+(if: $texted)[Maya sends back a skull emoji and "same." It is the best part of your week.
+
+]Weeks go by. Every night looks the same: the glow, the feed, the clock.
+
+<span class="inner">Everyone is doing better than me.</span>
+<span class="inner">I'm so behind. I can never catch up.</span>
+
+<span class="aside">In 2024, a University of Cambridge team pooled 143 studies covering more than 1.09 million adolescents. More time on social media went with more depression and anxiety (Fassi et al.).</span>
+<div class="choices">(link: "Go to your room")[(set: $mood to it - 1, $sleep to 0)(goto: "Your Room")]</div>
+
+
+:: Your Room
+(if: $missed)[You have missed three more days of school since then.](else:)[You have started missing school. Three days this month.] You tell your parents you are sick. You are not sure that is a lie.
+
+You know what would help. You can see every option. You just cannot pick most of them.
+
+<div class="choices"><span class="crossed">Delete the app</span>
+<span class="crossed">Tell your mom how you actually feel</span>
+<span class="crossed">Go outside</span>
+<span class="crossed">Sleep</span>
+(link: "Scroll")[(set: $act to 2)(goto: "Wake Up")]
+(link: "Text Maya")[(set: $act to 2, $texted to true)(goto: "Wake Up")]</div>
+
+
+:: Wake Up
+<span class="dawn">5:30 AM.</span> An alarm goes off. Not your phone. A clock radio, in an apartment in Washington, D.C.
+
+Your hands are older. On the nightstand is a folder stamped ''UNITED STATES SENATE''.
+
+You are not 13. You are a United States Senator.
+
+The kid you just played is not made up. Tonight, millions of kids will open these apps, many of them at thirteen, with no real age check. Some of them will still be awake at 1:47 AM.
+
+At 9:00 AM you cast the deciding vote on the ''Sixteen Act'': platforms may not open accounts for anyone under sixteen, and they must answer for it when they do.
+
+<div class="choices"><span class="crossed">Skip straight to the vote</span> <span class="hint">(you have not read the brief)</span>
+[[Read the morning brief->The Numbers]]</div>
+
+
+:: The Numbers
+<div class="memo"><span class="memo-head">MEMO · Office of the Senator · Re: Youth suicide data (CDC)</span>According to the CDC's National Center for Health Statistics, the suicide rate for Americans ages 10 to 24 held steady from 2001 to 2007. Then it rose ''62 percent'' between 2007 and 2021, from 6.8 to 11.0 deaths per 100,000 young people.
+
+Among kids ages 10 to 14, the rate ''tripled'' between 2007 and 2018, from 0.9 to 2.9 (Curtin and Garnett).
+
+Recent data brings some relief: the rate for ages 10 to 24 fell about 10 percent between 2021 and 2023. Even so, the 2023 rate of 9.9 per 100,000 is still far above the 6.8 of 2007 (Curtin and Garnett; Stone et al.).
+
+<span class="aside">Be careful with this. A trend line cannot prove a cause, and no study shows that social media drove these deaths. Suicide is never about a single thing. But depression and anxiety affect suicide risk, and the research ties heavier social media use to more of both (Fassi et al.). The outcome is severe, it has not recovered, and the exposure in question is linked to its known risk factors.</span>
+<div class="choices">[[Go to your desk->Your Desk]]</div></div>
+
+
+:: Your Desk
+<div class="memo"><span class="memo-head">OFFICE OF THE SENATOR · 7:15 AM</span>Your phone has not stopped ringing. Before you vote, you need to answer the four strongest objections to the Sixteen Act.
+
+<div class="choices">(if: $answered contains "connect")[<span class="done">✓ "Kids need connection."</span>](else:)[(link-goto: "“Kids need connection.”", "Kids Need Connection")]
+(if: $answered contains "parents")[<span class="done">✓ "It's the parents' call."</span>](else:)[(link-goto: "“It's the parents' call.”", "The Parents' Call")]
+(if: $answered contains "verify")[<span class="done">✓ "How would you even verify age?"</span>](else:)[(link-goto: "“How would you even verify age?”", "Verify")]
+(if: $answered contains "small")[<span class="done">✓ "Isn't r = 0.12 small?"</span>](else:)[(link-goto: "“Isn't r = 0.12 small?”", "Small Effect")]
+
+(if: $answered's length >= 4)[(link-goto: "Head to the Senate floor", "The Cost of Being Wrong")](else:)[<span class="crossed">Head to the Senate floor</span> <span class="hint">(answer every objection first)</span>]</div></div>
+
+
+:: Kids Need Connection
+<div class="memo"><span class="memo-head">CALL · Tech industry representative</span>"Senator, kids need each other. Adolescence is when friendships matter most. A kid who feels isolated at school might find someone online who finally understands them. You want to take that away?"
+
+They have research on their side, partly. In a 2022 meta-analysis in the //Journal of Adolescence//, Ziyao Zhou and Qijin Cheng found that online social support correlated with higher self-esteem (r = .29), and some studies in their review suggested it may ease loneliness and social anxiety.
+
+<div class="choices">(link: "Ask what Zhou and Cheng actually measured")[<span class="aside">They measured ''support'': caring, two-way relationships with people who are there for one another. Nothing in their study says a kid needs an account for that. Texting, calling, video chatting, and seeing friends in person all work without one.
+
+Their own analysis suggests support from people known only online may help less than support from people known in person. The link between online support and depression was small and not statistically significant (r = –.09), and they say proving cause and effect will take longitudinal studies (Zhou and Cheng).
+
+The harm comes from ''feed-based engagement'', which is what Fassi and Ahmed measured. A minimum age removes the feed, not the friends. Remember Maya's text? That choice was never crossed out.</span>
+(link: "Back to your desk")[(set: $answered to it + (a: "connect"))(goto: "Your Desk")]]</div></div>
+
+
+:: The Parents' Call
+<div class="memo"><span class="memo-head">CALL · Constituent, parent of two</span>"With respect, Senator, this is my decision as a parent. Not Congress's. Why does it need to be a law?"
+
+<div class="choices">(link: "Explain why it can't be one family's choice")[<span class="aside">Because the problem is partly collective. When every kid in a friend group is on an app, the one whose parents say no pays the price: their friends make plans without them on an app they do not have. (if: $waited)[You saw it happen. The group chat, the movies, the Thursday when Mom finally sighed "Fine."](else:)[You did not even try to wait. Most kids do not.]
+
+Parents feel pressure to give in, even the ones who would rather the app did not exist. A single shared line at sixteen removes that pressure, because no kid is the odd one out. It also puts the responsibility where it belongs: on the platforms, which decide how accounts are built and opened.</span>
+(link: "Back to your desk")[(set: $answered to it + (a: "parents"))(goto: "Your Desk")]]</div></div>
+
+
+:: Verify
+<div class="memo"><span class="memo-head">NOTE · From your legislative aide</span>"Senator, they're going to ask on the floor: how would we even verify age? Do we make every kid upload an ID?"
+
+<div class="choices">(link: "Give your honest answer")[<span class="aside">How to verify age is a hard question, and nobody has a perfect answer yet. But a hard implementation question is a reason to design the rule carefully, not a reason to abandon the principle.
+
+Remember the sign-up screen at thirteen? It asked for a birthday and took whatever you typed. The platforms built that screen. They decide how accounts are built and opened, so they should carry the responsibility. The standard is simple: platforms should not open accounts for children under sixteen, and they should answer for it when they do.</span>
+(link: "Back to your desk")[(set: $answered to it + (a: "verify"))(goto: "Your Desk")]]</div></div>
+
+
+:: Small Effect
+<div class="memo"><span class="memo-head">EMAIL · Opposing senator's staff</span>"Your own source says the correlation is r = 0.12. That's tiny. You're writing national law over a small number."
+
+<div class="choices">(link: "Respond")[<span class="aside">It is modest, and you should not inflate it. But small does not mean harmless. A small shift, repeated across millions of adolescents who open these apps every day, adds up to a large harm.
+
+And it is a hard number to explain away. The Cambridge team pooled 143 studies covering more than 1.09 million adolescents. The link held at nearly the same strength among adolescents with clinical-level symptoms (r = 0.10), they found no sign of publication bias, and age did not change the association (Fassi et al.). That rules out two easy explanations: one unusual group, or researchers only publishing studies that found something.
+
+On the other side of the world, the Australian National University team reviewed 182 studies of more than 1.1 million young people and found small but significant links to both depression and anxiety (Ahmed et al.). Two teams, two continents, one direction.</span>
+(link: "Back to your desk")[(set: $answered to it + (a: "small"))(goto: "Your Desk")]]</div></div>
+
+
+:: The Cost of Being Wrong
+<div class="memo"><span class="memo-head">8:55 AM · Outside the Senate chamber</span>Five minutes. Be honest with yourself: both sides are working with associations, not proven causes. Either side could be wrong. So what would each mistake cost?
+
+<div class="choices">(link: "Imagine you vote YES and you're wrong")[<span class="aside">A thirteen-year-old texts their friends instead of posting for a few more years. The price is an inconvenience.</span>]
+(link: "Imagine you vote NO and you're wrong")[<span class="aside">A generation spends its most vulnerable years inside something linked to anxiety, depression, and sleep problems. Those years do not come back.</span>]
+
+When the uncertainty is equal, the rational choice is the mistake you can undo.
+
+[[Walk onto the floor->The Vote]]</div></div>
+
+
+:: The Vote
+<div class="memo"><span class="memo-head">SENATE CHAMBER · 9:00 AM · Roll call: the Sixteen Act</span>The vote is tied. The clerk calls your name.
+
+Look at your choices. None of them are crossed out. Nobody can cross this one out for you.
+
+<div class="choices">(link: "Vote YEA")[(set: $vote to "yea", $act to 3)(goto: "Thirteen, Again")]
+(link: "Vote NAY")[(set: $vote to "nay", $act to 1, $sleep to 0, $mood to 0, $behind to 3)(goto: "1:47 AM, Again")]
+(link: "Abstain")[(set: $vote to "abstain", $act to 1, $sleep to 0, $mood to 0, $behind to 3)(goto: "1:47 AM, Again")]</div></div>
+
+
+:: 1:47 AM, Again
+(if: $vote is "abstain")[You did not vote. The Sixteen Act fails by one vote. Not choosing was a choice.](else:)[The Sixteen Act fails by one vote. Yours.]
+
+Somewhere tonight, a kid just turned thirteen. The sign-up screen asked for a birthday and took whatever they typed.
+
+The clock says 1:47 AM.
+
+<div class="choices"><span class="crossed">Put the phone down and sleep</span>
+<span class="crossed">Go to school tomorrow</span>
+<span class="crossed">Tell someone how you feel</span>
+<span class="crossed">Stop comparing</span>
+
+(link: "Reconsider your vote")[(set: $act to 2)(goto: "The Cost of Being Wrong")]</div>
+
+
+:: Thirteen, Again
+The Sixteen Act passes by one vote. Yours.
+
+Somewhere, it is a kid's thirteenth birthday. Under the wrapping paper is a phone. The app's sign-up screen says: //Accounts open at 16.// Nobody in their grade has one, so nobody is the odd one out.
+
+Tonight, look at the choices. Every single one is open.
+
+<div class="choices">(link: "Put the phone down and sleep")[<span class="aside">You sleep. Actually sleep.</span>]
+(link: "Text Maya")[<span class="textmsg">movies saturday??</span> <span class="textmsg">YES</span>]
+(link: "Go to school tomorrow")[<span class="aside">You are tired in the normal way. Second period is boring. Lunch is loud. It is a good day.</span>]
+(link: "Make plans with friends")[<span class="aside">The plans are made in a group text. Everyone is in it, because nobody has the app.</span>]
+
+[[Three years later->Sixteen Can Wait]]</div>
+
+
+:: Sixteen Can Wait
+Social media is not the problem on its own. It can connect kids with their friends. Handing accounts to thirteen-year-olds is the problem.
+
+If we are going to give kids a product linked to more depression and anxiety, we need proof that it is safe, and we do not have it. Across more than a million adolescents, heavier use tracked with more depression and anxiety (Fassi et al.). The support that helps kids comes from caring relationships, and those do not require an account (Zhou and Cheng). A minimum age asks kids to give up a feed, not their friends.
+
+If we are wrong, kids lose a few years of posting. If we do nothing, we risk years nobody can give back.
+
+Platforms should stop opening accounts for children under sixteen, and they should answer for it when they do.
+
+''Sixteen can wait. Kids have the rest of their lives to scroll.''
+
+<span class="note">Author's note: Act 1 is based on my own experience in middle school. I scrolled in my room every night, watching people my age who seemed to have everything figured out, until I stopped sleeping and stayed home from school for days. Looking back, I was not behind. I was a kid comparing my real life to everyone else's highlight reel. — Nigel Schlick</span>
+
+<div class="choices">[[Works Cited]]
+(link: "Play again")[(goto: "Start")]</div>
+
+
+:: Works Cited
+''Works Cited''
+
+<span class="cite">Ahmed, Oli, et al. "Social Media Use, Mental Health and Sleep: A Systematic Review with Meta-Analyses." //Journal of Affective Disorders//, vol. 367, 2024, pp. 701–12, <a href="https://doi.org/10.1016/j.jad.2024.08.193" target="_blank" rel="noopener">doi.org/10.1016/j.jad.2024.08.193</a>.</span><span class="cite">Curtin, Sally C., and Matthew F. Garnett. "Suicide and Homicide Death Rates Among Youth and Young Adults Aged 10–24: United States, 2001–2021." //NCHS Data Brief//, no. 471, National Center for Health Statistics, June 2023, <a href="https://www.cdc.gov/nchs/products/databriefs/db471.htm" target="_blank" rel="noopener">www.cdc.gov/nchs/products/databriefs/db471.htm</a>.</span><span class="cite">Fassi, Luisa, et al. "Social Media Use and Internalizing Symptoms in Clinical and Community Adolescent Samples: A Systematic Review and Meta-Analysis." //JAMA Pediatrics//, vol. 178, no. 8, 2024, pp. 814–22, <a href="https://doi.org/10.1001/jamapediatrics.2024.2078" target="_blank" rel="noopener">doi.org/10.1001/jamapediatrics.2024.2078</a>.</span><span class="cite">Stone, Deborah M., et al. "Notes from the Field: Differences in Suicide Rates, by Race and Ethnicity and Age Group — United States, 2018–2023." //Morbidity and Mortality Weekly Report//, vol. 74, no. 35, 2025, pp. 550–53, <a href="https://doi.org/10.15585/mmwr.mm7435a2" target="_blank" rel="noopener">doi.org/10.15585/mmwr.mm7435a2</a>.</span><span class="cite">Zhou, Ziyao, and Qijin Cheng. "Relationship Between Online Social Support and Adolescents' Mental Health: A Systematic Review and Meta-Analysis." //Journal of Adolescence//, vol. 94, no. 3, 2022, pp. 281–92, <a href="https://doi.org/10.1002/jad.12031" target="_blank" rel="noopener">doi.org/10.1002/jad.12031</a>.</span>
+(link-undo: "← Back")
